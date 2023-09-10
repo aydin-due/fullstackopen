@@ -23,8 +23,14 @@ const App = () => {
       id: notes.length + 1
     }
 
-    setNotes(notes.concat(note))
-    setNewNote('')
+    axios.
+      post('http://localhost:3001/notes', note)
+      .then(
+        response => {
+          setNotes(notes.concat(response.data))
+          setNewNote('')
+        }
+      )
   }
 
   const handleNoteChange = (event) => {
