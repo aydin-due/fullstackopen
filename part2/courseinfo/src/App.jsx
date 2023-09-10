@@ -1,15 +1,5 @@
 import Course from './components/Course'
 
-
-const Total = (props) => {
-  const total = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
-  return (
-    <>
-     <p>number of exercises {total}</p>
-    </>
-  )
-}
-
 const App = () => {
   const course = {
     id: 1,
@@ -29,6 +19,11 @@ const App = () => {
         id: 3,
         name: 'State of a component',
         exercises: 14
+      },
+      {
+        id: 4,
+        name: 'Redux',
+        exercises: 11
       }
     ]
   }
