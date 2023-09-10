@@ -46,6 +46,8 @@ const App = () => {
     setTotal(left+updatedRight)
   }
 
+  const setToValue = (newValue) => () => setTotal(newValue)
+
   return (
     <div>
       {left}
@@ -54,6 +56,7 @@ const App = () => {
       {right}
       <History allClicks={allClicks}/>
       <p>total {total}</p>
+      <Button handleClick={setToValue(500)} text='set to 500'/>
     </div>
   )
 }
