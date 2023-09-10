@@ -19,15 +19,17 @@ const Statistics = ({good, neutral, bad, total}) => {
   return (
     <div>
       <h2>statistics</h2>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {total}</p>
-        <p>average {calculateScore()}</p>
-        <p>positive {positivePercentage()}%</p>
+      <StatisticsLine name="good" value={good}/>
+      <StatisticsLine name="neutral" value={neutral}/>
+      <StatisticsLine name="bad" value={bad}/>
+      <StatisticsLine name="all" value={total}/>
+      <StatisticsLine name="average" value={calculateScore()}/>
+      <StatisticsLine name="positive" value={positivePercentage()}/>
     </div>
   )
 }
+
+const StatisticsLine = ({name, value}) => <p>{name} {value}</p>
 
 const App = () => {
   const [good, setGood] = useState(0)
