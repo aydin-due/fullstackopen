@@ -3,19 +3,30 @@ import { useState } from 'react'
 const Button = ({handleClick, text}) => (<div><button onClick={handleClick}>{text}</button></div>)
 
 const Statistics = ({good, neutral, bad, total}) => {
-  const calculateScore = () => total == 0 ? 0 : (good - bad) / total;
+  if (total == 0) {
+    return (
+      <div>
+        <h2>statistics</h2>
+        <p>no feedback given</p>
+      </div>
+    )
+  }
 
-  const positivePercentage = () => total == 0 ? 0 : (good*100)/total
+  const calculateScore = () => (good - bad) / total;
+
+  const positivePercentage = () => (good*100)/total
   
-  return <div>
-    <h2>statistics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-      <p>average {calculateScore()}</p>
-      <p>positive {positivePercentage()}%</p>
-  </div>
+  return (
+    <div>
+      <h2>statistics</h2>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+        <p>all {total}</p>
+        <p>average {calculateScore()}</p>
+        <p>positive {positivePercentage()}%</p>
+    </div>
+  )
 }
 
 const App = () => {
