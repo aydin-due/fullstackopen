@@ -55,6 +55,20 @@ const App = () => {
 
   const showedNotes =showAll ? notes : notes.filter(note => note.important)
 
+  const Footer = () => {
+    const footerStyle = {
+      color: 'green',
+      fontStyle: 'italic',
+      fontSize: 16
+    }
+    return (
+      <div style={footerStyle}>
+        <br />
+        <em>Note app, Department of Computer Science, University of Helsinki 2023</em>
+      </div>
+    )
+  }
+
   return (
     <div>
       <h1>Notes</h1>
@@ -73,6 +87,7 @@ const App = () => {
         <input value={newNote} onChange={handleNoteChange}/>
         <button type='submit'>save</button>
       </form>
+      <Footer />
     </div>
   )
 }
