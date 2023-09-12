@@ -4,11 +4,13 @@ import PersonForm from './components/PersonForm'
 import People from './components/People'
 import { useEffect } from 'react'
 import phonebookService from './services/phonebook'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newPerson, setNewPerson] = useState({name:'', number:''})
   const [filter, setFilter] = useState('')
+  const [message, setMessage] = useState(null)
   let results = filter === '' ? persons : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
   const handleNameChange = (event) => setNewPerson({...newPerson, name: event.target.value})
@@ -25,6 +27,10 @@ const App = () => {
         .then(person => {
           setPersons(persons.map(p => p.id !== person.id ? p : person))
           setNewPerson({name: '', number: ''})
+          setMessage(`updated ${person.name}'s number`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
       }
     } else {
@@ -32,10 +38,14 @@ const App = () => {
         .then(person => {
           setPersons(persons.concat(person))
           setNewPerson({name:'', number:''})
+          setMessage(`added ${person.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
     }
   }
-
+console.log("init", message)
   useEffect(() => {
     phonebookService.getAll()
       .then(people => {setPersons(people)})
@@ -56,6 +66,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <Filter handleFilterChange={handleFilterChange} filter={filter}/>
       <h2>add new number</h2>
       <PersonForm 
