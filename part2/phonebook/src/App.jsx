@@ -5,12 +5,14 @@ import People from './components/People'
 import { useEffect } from 'react'
 import phonebookService from './services/phonebook'
 import Notification from './components/Notification'
+import Error from './components/Error'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newPerson, setNewPerson] = useState({name:'', number:''})
   const [filter, setFilter] = useState('')
   const [message, setMessage] = useState(null)
+  const [error, setError] = useState(null)
   let results = filter === '' ? persons : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
   const handleNameChange = (event) => setNewPerson({...newPerson, name: event.target.value})
@@ -53,13 +55,19 @@ console.log("init", message)
 
   const deletePerson = (id) => {
     const deletedPerson = persons.find(p => p.id == id)
-    if (window.confirm(`are you sure you want to delete ${deletedPerson.name}?`)){
-      phonebookService.deletePerson(id)
-      .then(deletedPerson => {
-        setPersons(persons.filter(p => p.id !== id))
+      if (window.confirm(`are you sure you want to delete ${deletedPerson.name}?`)){
+        phonebookService.deletePerson(id)
+        .then(deletedPerson => {
+          setPersons(persons.filter(p => p.id !== id))
+        }
+        )
+        .catch(error => {
+          setError(`${deletedPerson.name} has already been removed`)
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+        })
       }
-      )
-    }
 
   }
 
@@ -67,6 +75,7 @@ console.log("init", message)
     <div>
       <h2>Phonebook</h2>
       <Notification message={message}/>
+      <Error error={error}/>
       <Filter handleFilterChange={handleFilterChange} filter={filter}/>
       <h2>add new number</h2>
       <PersonForm 
