@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Result from "./Result"
 
-const Results = ({ country, countries, handleButtonClick }) => {    
+const Results = ({ country, countries, handleButtonClick }) => {      
     if (country) {
         return <Result country={country} />
     }
