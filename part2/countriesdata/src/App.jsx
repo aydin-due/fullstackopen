@@ -15,9 +15,7 @@ function App() {
     setCountry()
   }
 
-  const handleButtonClick = (country) => {
-    setCountry(country)
-  }
+  const handleButtonClick = (country) => setCountry(country)
 
   useEffect(() => {
     countriesService
@@ -52,7 +50,6 @@ function App() {
         country={country}
       />
     </div>
-     
   )
 }
 
