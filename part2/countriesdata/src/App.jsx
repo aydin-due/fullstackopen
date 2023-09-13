@@ -5,11 +5,19 @@ import Search from './components/Search'
 import Results from './components/Results'
 
 function App() {
-  const [country, setCountry] = useState('')
+  const [input, setInput] = useState('')
+  const [country, setCountry] = useState()
   const [countries, setCountries] = useState([])
   const [filteredCountries, setFilteredCountries] = useState([])
 
-  const handleCountryChange = (event) => setCountry(event.target.value)
+  const handleInputChange = (event) => {
+    setInput(event.target.value)
+    setCountry()
+  }
+
+  const handleButtonClick = (country) => {
+    setCountry(country)
+  }
 
   useEffect(() => {
     countriesService
@@ -20,17 +28,29 @@ function App() {
   }, [])
   
   useEffect(() => {
-    if (country !== '') {
-      setFilteredCountries(countries.filter(c => c.name.common.toLowerCase().includes(country.toLowerCase())))
+    if (input !== '') {
+      const results = countries.filter(c => c.name.common.toLowerCase().includes(input.toLowerCase()))
+      if (results.length === 1) {
+        setCountry(results[0])
+      } else {
+        setFilteredCountries(results)
+      }
     } else {
       setFilteredCountries([])
     }
-  }, [country])
+  }, [input])
 
   return (
     <div>
-      <Search handleCountryChange={handleCountryChange} country={country} />
-      <Results countries={filteredCountries} />
+      <Search 
+        handleInputChange={handleInputChange} 
+        input={input} 
+      />
+      <Results 
+        countries={filteredCountries}  
+        handleButtonClick={handleButtonClick}
+        country={country}
+      />
     </div>
      
   )

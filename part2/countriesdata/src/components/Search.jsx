@@ -1,10 +1,10 @@
-const Search = ({handleCountryChange, country}) => {
+const Search = ({handleInputChange, input}) => {
     return <>
     <form>
         <p>find countries &nbsp;
             <input 
-                onChange={handleCountryChange} 
-                value={country}>
+                onChange={handleInputChange} 
+                value={input}>
             </input>
         </p>
       </form>

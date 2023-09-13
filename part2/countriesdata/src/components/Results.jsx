@@ -1,16 +1,21 @@
+import { useState } from "react"
 import Result from "./Result"
 
-const Results = ({ countries }) => {
+const Results = ({ country, countries, handleButtonClick }) => {    
+    if (country) {
+        return <Result country={country} />
+    }
+
     if (countries.length > 10){
         return <p>Too many matches, specify another filter</p>
     }
 
-    if (countries.length == 1) {
-       return <Result country={countries[0]} />
-    }
-
     return <>
-        {countries.map(c => <p key={c.name.common}>{c.name.common}</p>)}
+        {countries.map(c => 
+            <p key={c.name.common}>
+                {c.name.common} &nbsp;
+                <button onClick={() => handleButtonClick(c)}>show</button>
+            </p>)}
     </>
 }
 
