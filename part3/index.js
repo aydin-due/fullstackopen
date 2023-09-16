@@ -27,17 +27,21 @@ app.get('/api/notes', (req, res) => {
     res.json(notes)
 })
 
-console.log('Hello World!')
 app.get('/api/notes/:id', (req, res) => {
   const id = Number(req.params.id)
-  console.log(id)
   const note = notes.find(note => note.id === id)
-  console.log(note)
   if (note) {
     res.json(note)
   } else {
     res.status(404).end()
   }
+})
+
+app.delete('/api/notes/:id', (req, res) => {
+  const id = Number(req.params.id)
+  notes = notes.filter(note => note.id !== id)
+  // 204 no content
+  response.status(204).end()
 })
 
 const PORT = 3001;
