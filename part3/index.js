@@ -41,7 +41,7 @@ app.delete('/api/notes/:id', (req, res) => {
   const id = Number(req.params.id)
   notes = notes.filter(note => note.id !== id)
   // 204 no content
-  response.status(204).end()
+  res.status(204).end()
 })
 
 const PORT = 3001;
