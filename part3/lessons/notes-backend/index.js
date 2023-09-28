@@ -26,14 +26,17 @@ let notes = [
     }
 ]
 
+// index
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
+// get all notes
 app.get('/api/notes', (req, res) => {
     Note.find({}).then(notes => { res.json(notes) })
 })
 
+// get a single note
 app.get('/api/notes/:id', (req, res, next) => {
   Note.findById(req.params.id).then(note => {
     if (note){
@@ -45,13 +48,14 @@ app.get('/api/notes/:id', (req, res, next) => {
   .catch(error => next(error))
 })
 
+// delete a note
 app.delete('/api/notes/:id', (req, res) => {
-  const id = Number(req.params.id)
-  notes = notes.filter(note => note.id !== id)
-  // 204 no content
-  res.status(204).end()
+  Note.findByIdAndDelete(req.params.id)
+  .then(result => res.status(204).end())
+  .catch(error => next(error))
 })
 
+// create a note
 app.post('/api/notes', (req, res) => {
   const body = req.body
   
@@ -67,6 +71,17 @@ app.post('/api/notes', (req, res) => {
   })
   
   note.save().then(savedNote => {res.json(savedNote)})
+})
+
+app.put('/api/notes/:id', (req, res, next) => {
+  const note = {
+    content: req.body.content,
+    important: req.body.important
+  }
+
+  Note.findByIdAndUpdate(req.params.id, note, {new: true})
+  .then(updatedNote => res.json(updatedNote))
+  .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
