@@ -34,20 +34,34 @@ const App = () => {
             setMessage(null)
           }, 5000)
         })
+        .catch(error => {
+
+          setError(error.response.data.error)
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+          
+        })
       }
     } else {
       phonebookService.create(newPerson)
-        .then(person => {
-          setPersons(persons.concat(person))
-          setNewPerson({name:'', number:''})
-          setMessage(`added ${person.name}`)
-          setTimeout(() => {
-            setMessage(null)
-          }, 5000)
-        })
+      .then(person => {
+        setPersons(persons.concat(person))
+        setNewPerson({name:'', number:''})
+        setMessage(`added ${person.name}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+          setError(error.response.data.error)
+           setTimeout(() => {
+             setError(null)
+           }, 5000)
+            
+       })
     }
   }
-console.log("init", message)
   useEffect(() => {
     phonebookService.getAll()
       .then(people => {setPersons(people)})
