@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 if (process.argv.length<3) {
-  console.log('give password as argument')
-  process.exit(1)
+	console.log('give password as argument')
+	process.exit(1)
 }
 
 const password = process.argv[2]
@@ -14,8 +14,8 @@ mongoose.connect(url)
 
 // schema tells mongoose how the obj are to be stored in the db
 const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
+	content: String,
+	important: Boolean,
 })
 
 // models are constructor functions (js obj)
@@ -36,8 +36,8 @@ note.save().then(result => {
 
 // get notes
 Note.find({}).then(result => {
-  result.forEach(note => {
-    console.log(note)
-  })
-  mongoose.connection.close()
+	result.forEach(note => {
+		console.log(note)
+	})
+	mongoose.connection.close()
 })
